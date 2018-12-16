@@ -25,11 +25,11 @@ SSD1306 display (OLED_I2C_ADDR, OLED_SDA, OLED_SCL);
  * TODO: Change the following keys
  * NwkSKey: network session key, AppSKey: application session key, and DevAddr: end-device address
  *************************************/
-static u1_t NWKSKEY[16] = { .... };  // Paste here the key in MSB format
+static u1_t NWKSKEY[16] = { 0x1E, 0x14, 0xF1, 0xBA, 0x83, 0x4F, 0xDC, 0xB3, 0xF7, 0xFA, 0x31, 0xE6, 0x55, 0x10, 0x01, 0xF2 };  // Paste here the key in MSB format
 
-static u1_t APPSKEY[16] = { .... };  // Paste here the key in MSB format
+static u1_t APPSKEY[16] = { 0x04, 0xD9, 0x1F, 0x48, 0x62, 0xF7, 0xF7, 0x5C, 0xEB, 0xD5, 0xF1, 0xB5, 0xCA, 0xCC, 0xEA, 0xED };  // Paste here the key in MSB format
 
-static u4_t DEVADDR = 0x00000000;   // Put here the device id in hexadecimal form.
+static u4_t DEVADDR = 0x26011422;   // Put here the device id in hexadecimal form.
 
 void os_getArtEui (u1_t* buf) { }
 void os_getDevEui (u1_t* buf) { }
@@ -39,7 +39,7 @@ static osjob_t sendjob;
 
 // Schedule TX every this many seconds (might become longer due to duty
 // cycle limitations).
-const unsigned TX_INTERVAL = 60;
+const unsigned TX_INTERVAL = 10;
 char TTN_response[30];
 
 // Pin mapping
@@ -189,11 +189,13 @@ void setup() {
     LMIC_setLinkCheckMode(0);
 
     // TTN uses SF9 for its RX2 window.
-    LMIC.dn2Dr = DR_SF9;
+//    LMIC.dn2Dr = DR_SF9;
+    LMIC.dn2Dr = DR_SF7;
 
     // Set data rate and transmit power for uplink (note: txpow seems to be ignored by the library)
     //LMIC_setDrTxpow(DR_SF11,14);
-    LMIC_setDrTxpow(DR_SF9,14);
+//    LMIC_setDrTxpow(DR_SF9,14);
+    LMIC_setDrTxpow(DR_SF7,14);
 
     // Start job
     do_send(&sendjob);
