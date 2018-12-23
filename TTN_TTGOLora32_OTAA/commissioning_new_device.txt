@@ -1,0 +1,26 @@
+
+
+* open Visual studio
+
+* click on the platformio bug icon
+
+* find main.cpp
+
+* click Build upload
+
+* onboard the device:
+    https://console.thethingsnetwork.org/applications/mitems
+
+(All using OTAA mode)
+
+Copy out chipid from Monitor output, add two zero bytes at front to make it 8 bytes total:
+    00 00 70 84 fe a4 ae 30
+
+put into Device EUI of Things network
+Give it a deviceID: ttgo_oled4
+click on [register]
+
+* show the App Key, put into C++ mode, copy into source code of device in main.cpp
+
+
+
